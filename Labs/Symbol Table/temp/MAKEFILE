@@ -1,0 +1,37 @@
+# ======================================================================
+
+DIR = symbol
+FILES = Makefile parser.y scanner.l symbol.c
+
+#==========================================================================
+result.txt:
+	symbol tests/00-wrong-void-variable.c;symbol tests/01-wrong-void-array.c;symbol tests/02-wrong-void-argument.c;symbol tests/03-wrong-void-array-argument.c;symbol tests/10-redefined-variable.c;symbol tests/11-redefined-array.c;symbol tests/12-redefined-function.c;symbol tests/13-redefined-argument.c;symbol tests/14-redefined-array-argument.c;symbol tests/20-undefined-variable.c;symbol tests/21-undefined-array.c;symbol tests/22-undefined-function.c;symbol tests/30-type-error-variable.c;symbol tests/31-type-error-array.c;symbol tests/32-type-error-function.c;symbol tests/40-wrong-no-argument-function.c;symbol tests/99-argument.c;symbol tests/99-global-array.c;symbol tests/99-global-variable.c;symbol tests/99-local-arrays.c;symbol tests/99-local-variable.c;symbol tests/99-tables.c;
+
+symbol:	parser.o scanner.o
+	gcc -O -o symbol parser.o scanner.o -lfl
+
+parser.o:	parser.c
+	gcc -O -c parser.c
+
+parser.c:	parser.y symbol.c
+	bison -d parser.y
+	mv parser.tab.c parser.c
+	mv parser.tab.h parser.h
+
+scanner.o:	scanner.c
+	gcc -O -c scanner.c
+
+scanner.c:	scanner.l
+	flex scanner.l
+	mv lex.yy.c scanner.c
+
+# ======================================================================
+
+install:	symbol
+	install symbol /usr/local/bin
+
+# ======================================================================
+clean:
+	@rm -rf .*~ *~ symbol parser.c parser.h scanner.c *.o *.ps *.pdf
+
+# ======================================================================
