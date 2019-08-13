@@ -1,0 +1,36 @@
+Arithmetic inst
+add r, s, t // reg[r] = reg[s] + reg[t]
+sub r, s, t // reg[r] = reg[s] - reg[t]
+mul r, s, t // reg[r] = reg[s] * reg[t]
+div r, s, t // reg[r] = reg[s] / reg[t] (/0 signal generation)
+
+Relational inst
+lt r, s, t // reg[r] = ? (reg[s] < reg[t]) : 1 : 0
+le r, s, t // reg[r] = ? (reg[s] <= reg[t]) : 1 : 0
+gt r, s, t // reg[r] = ? (reg[s] > reg[t]) : 1 : 0
+ge r, s, t // reg[r] = ? (reg[s] >= reg[t]) : 1 : 0
+eq r, s, t // reg[r] = ? (reg[s] == reg[t]) : 1 : 0
+ne r, s, t // reg[r] = ? (reg[s] != reg[t]) : 1 : 0
+
+Load/Store inst
+ld r, d(s) // reg[r] = dMem[d + reg[s]]
+lda r, d(s) // reg[r] = d + reg[s]
+ldc r, d // reg[r] = d
+st r, d(s) // dMem[d + reg[s]] = reg[r]
+
+Jump/Branch inst
+jlt r, d(s) // if(reg[r] < 0) reg[pc] = d + reg[s]
+jle r, d(s) // if(reg[r] <= 0) reg[pc] = d + reg[s]
+jgt r, d(s) // if(reg[r] > 0) reg[pc] = d + reg[s]
+jge r, d(s) // if(reg[r] >= 0) reg[pc] = d + reg[s]
+jeq r, d(s) // if(reg[r] == 0) reg[pc] = d + reg[s]
+jne r, d(s) // if(reg[r] != 0) reg[pc] = d + reg[s]
+
+Stack, Input/Output inst and etc
+push r // dMem[reg[sp]] = reg[r]
+       // reg[sp] = reg[sp] - 1
+pop r  // reg[sp] = reg[sp] + 1
+       // reg[r] = dMem[reg[sp]]
+in r   // reg[r] <= in
+out r  // reg[r] => out
+halt   // halt
