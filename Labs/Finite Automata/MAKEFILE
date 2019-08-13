@@ -1,0 +1,42 @@
+# ----------------------------------------------------------------------
+
+DIR=hw01-Finite-Automata
+SOURCE_FILES=gen.c evenno1.c endsbb.c 3cxs.c dfa-sample.c
+EXECUTABLE_FILES=gen evenno1 endsbb 3cxs
+
+# ----------------------------------------------------------------------
+
+CC=gcc
+CFLAGS=-O2 -Wall
+LDLIBS=-lreadline
+
+# ----------------------------------------------------------------------
+
+all:	$(EXECUTABLE_FILES)
+
+# ----------------------------------------------------------------------
+
+install:	$(EXECUTABLE_FILES) dfa-sample.c
+	mkdir -p /home/compiler/hw01
+	cp $(EXECUTABLE_FILES) dfa-sample.c /home/compiler/hw01/
+
+# ----------------------------------------------------------------------
+
+indent:	$(SOURCE_FILES)
+	indent -i2 -kr $(SOURCE_FILES)
+	@rm -rf *~
+
+# ----------------------------------------------------------------------
+
+pdf:	$(SOURCE_FILES)
+	ls -l $(SOURCE_FILES) > $(DIR)
+	a2ps --medium=A4 --line-numbers=1 $(DIR) $(SOURCE_FILES) -o $(DIR).ps
+	ps2pdf -sPAPERSIZE=a4 $(DIR).ps $(DIR).pdf
+	@rm -f $(DIR) $(DIR).ps
+
+# ----------------------------------------------------------------------
+
+clean:
+	@rm -rf a.out *.o *.out *.pdf $(EXECUTABLE_FILES) *~
+
+# ----------------------------------------------------------------------
