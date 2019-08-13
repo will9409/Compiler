@@ -1,0 +1,38 @@
+# ======================================================================
+
+DIR = compiler
+FILES = Makefile parser.y scanner.l symbol.c
+
+# ======================================================================
+compare:
+	cmp 00-local-variable.tm tests/00-local-variable.tm;cmp 01-local-array.tm tests/01-local-array.tm; cmp 10-global-variable.tm tests/10-global-variable.tm;cmp 11-global-array.tm tests/11-global-array.tm;cmp 20-expression-0.tm tests/20-expression-0.tm; cmp 21-expression-1.tm tests/21-expression-1.tm; cmp 30-if-0.tm tests/30-if-0.tm;cmp 31-if-1.tm tests/31-if-1.tm;cmp 40-while-0.tm tests/40-while-0.tm;cmp 41-while-1.tm tests/41-while-1.tm;cmp 50-input-output-0.tm tests/50-input-output-0.tm;cmp 60-array-argument-0.tm tests/60-array-argument-0.tm;cmp 61-array-argument-1.tm tests/61-array-argument-1.tm;cmp 70-add.tm tests/70-add.tm;cmp 71-sum.tm tests/71-sum.tm;cmp 72-fact.tm tests/72-fact.tm;cmp 73-gcd.tm tests/73-gcd.tm;cmp 74-sort.tm tests/74-sort.tm
+
+commands:
+	cm -s 00-local-variable.c;cm -s 01-local-array.c;cm -s 10-global-variable.c;cm -s 11-global-array.c;cm -s 20-expression-0.c;cm -s 21-expression-1.c;cm -s 30-if-0.c;cm -s 31-if-1.c;cm -s 40-while-0.c;cm -s 41-while-1.c;cm -s 50-input-output-0.c;cm -s 60-array-argument-0.c;cm -s 61-array-argument-1.c;cm -s 70-add.c;cm -s 71-sum.c;cm -s 72-fact.c;cm -s 73-gcd.c;cm -s 74-sort.c;
+
+
+cm:	parser.o scanner.o
+	gcc -O -o cm parser.o scanner.o -lfl
+
+parser.o:	parser.c
+	gcc -O -c parser.c
+
+parser.c:	parser.y symbol.c
+	bison -d parser.y
+	mv parser.tab.c parser.c
+	mv parser.tab.h parser.h
+
+scanner.o:	scanner.c
+	gcc -O -c scanner.c
+
+scanner.c:	scanner.l
+	flex scanner.l
+	mv lex.yy.c scanner.c
+
+# ======================================================================
+
+clean:
+	@rm -rf .*~ *~ cm parser.c parser.h scanner.c *.o *.tm *.ps *.pdf
+	cd tests; make clean
+
+# ======================================================================
