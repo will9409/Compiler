@@ -1,6 +1,6 @@
-# Project Title
+# C-Minus Compiler 제작
 
-One Paragraph of project description goes here
+C 언어보다 단순하고 제약적인 C-Minus 언어 컴파일러를 만들어 보면서 컴파일러의 구조를 이해합니다.
 
 ## Getting Started
 
