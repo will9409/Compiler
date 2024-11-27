@@ -15,7 +15,7 @@ C 언어보다 단순하고 제약적인 C-Minus 언어 컴파일러를 만들�
 -
 
 ## Running the tests
-각 test 프로그램에 대하여 결과 출력
+각 test 프로그램에 대하여 결과 출력 예시
 
 00-local-variable
  
